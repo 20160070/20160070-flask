@@ -2,7 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/code,windows,python,flask
 # Edit at https://www.toptal.com/developers/gitignore?templates=code,windows,python,flask
 env/
-
+*.db
 save.txt
 ### Code ###
 .vscode/*
