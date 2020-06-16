@@ -30,10 +30,9 @@ def form():
 
 @app.route('/getinfo')
 def getinfo():
-    # 파일 입력
-    with open("static/save.txt", "r", encoding='utf-8') as file:
-        student = file.read().split(',')  # 쉽표로 잘라서 student 에 배열로 저장
-    return '번호 : {}, 이름 : {}'.format(student[0], student[1])
+    ret = testdb.select_all()
+    print(ret[1])
+    return render_template('getinfo.html', data = ret)
 
 
 @app.route('/method', methods=['GET', 'POST'])
@@ -43,9 +42,8 @@ def method():
     else:
         num = request.form['num']
         name = request.form['name']
-        print(num, name)
-        with open("static/save.txt", "w", encoding='utf-8') as f:
-            f.write("%s %s" % (num, name))
+        testdb.insert_data(num, name)
+
         return 'POST 이다. 학번은 : {} 이름은 : {}'.format(num, name)
  
 
