@@ -90,6 +90,21 @@ def select_user(id, pw):
     finally:
         db.close()
         return ret
+
+
+def check_id(id):
+    ret = ()
+    try:
+        db = dbcon()
+        c = db.cursor()
+        setdata = (id)
+        c.execute('SELECT * FROM users WHERE id = ?', setdata)
+        ret = c.fetchone()
+    except Exception as e:
+        print('db error:', e)
+    finally:
+        db.close()
+        return ret
         
 #insert_user('aaa', '1234', '장철준') 
 #ret = select_all()
