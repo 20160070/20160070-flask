@@ -1,4 +1,5 @@
 import json
+
 def set_user(name):
     user = {
         "name" : name,
@@ -18,3 +19,4 @@ def save_game(fname, use):
         print("%s:%s" % (key, use[key]))
         f.write("%s:%s\n" % (key, use[key]))
     f.close() 
+

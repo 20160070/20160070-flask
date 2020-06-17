@@ -1,13 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, session
 
-import game
 import json
-import testdb
-
-from flask import Flask, request, render_template, redirect, url_for, abort, session
-
 import game
-import json
 import testdb
 
 
@@ -18,27 +12,28 @@ app.secret_key = b'aaa!111/'
 
 @app.route('/')
 def hello():
-    return '메인페이지!'
+    return render_template('main.html')
 
 
-#@app.route('/hello/<name>')
-#def hellovar(name):
- #  return render_template("gamestart.html", data = user)
+@app.route('/hello/<name>')
+def hellovar(name):
+    
+    return render_template("gamestart.html", data = "철준")
 
-##@app.route('/game')
-#def game():
- #   with open("static/save.txt", "r", encoding='utf-8') as f:
-   #    data = f.read()
-      ## print(user)
-    #return "{0}님 숫자를 맞춰보세요. ({1}승{2}패 입니다.)".format(user["name"], user["win"], user["lose"])
+@app.route('/game')
+def game():
+    with open("static/save.txt", "r", encoding='utf-8') as f:
+        data = f.read()
+        user = json.loads(data)
+    return "{0}님 숫자를 맞춰보세요. ({1}승{2}패 입니다.)".format(user["name"], user["win"], user["lose"])
 
 
 
-#@app.route('/getinfo')
-#def getinfo():
- #   ret = testdb.select_all()
-  #  print(ret[1])
-   # return render_template('getinfo.html', data = ret)
+@app.route('/getinfo')
+def getinfo():
+    ret = testdb.select_all()
+    print(ret[1])
+    return render_template('getinfo.html', data = ret)
 
 
 
