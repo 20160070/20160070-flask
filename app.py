@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 app.secret_key = b'aaa!111/'
-
+# 메인페이지
 @app.route('/')
 def hello():
     return render_template('main.html')
@@ -19,7 +19,7 @@ def hello():
 def hellovar(name):
     
     return render_template("gamestart.html", data = "철준")
-
+# 게임
 @app.route('/game')
 def game():
     with open("static/save.txt", "r", encoding='utf-8') as f:
@@ -28,12 +28,15 @@ def game():
     return "{0}님 숫자를 맞춰보세요. ({1}승{2}패 입니다.)".format(user["name"], user["win"], user["lose"])
 
 
-
+# 회원정보
 @app.route('/getinfo')
 def getinfo():
-    ret = testdb.select_all()
-    print(ret[1])
-    return render_template('getinfo.html', data = ret)
+    if 'user' in session:
+        ret = testdb.select_all()
+        print(ret[1]) 
+        return render_template('getinfo.html', data = ret)
+        
+    return redirect(url_for('login'))
 
 
 
@@ -47,15 +50,16 @@ def login():
         pw = request.form['pw']
         ret = testdb.select_user(id, pw)
         if ret != None:
-            return "안녕하세요~ {}님".format(ret[2])
+            session['user'] = id
+            return redirect(url_for('hello'))
         else:
-            return "아이디 또는 패스워드를 확인 하세요."
+            return redirect(url_for('login'))
 
 # 로그아웃(session 제거)
 @app.route('/logout') 
 def logout():
     session.pop('user', None)
-    return redirect(url_for('form'))
+    return redirect(url_for('hello'))
 
 # 로그인 사용자만 접근 가능으로 만들면
 @app.route('/form')
