@@ -51,7 +51,7 @@ def login():
         ret = testdb.select_user(id, pw)
         if ret != None:
             session['user'] = id
-            return redirect(url_for('hello'))
+            return redirect(url_for('login'))
         else:
             return redirect(url_for('login'))
 
